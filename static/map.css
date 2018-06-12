@@ -1,0 +1,95 @@
+#map{
+    height:330px;
+    width:750px;
+    margin-left:335px;
+    margin-top:-20px;
+    border-radius:8px;
+    border:solid grey 2px;
+}
+#mapsearch{
+    height: 30px;
+    width: 275px;
+    margin-left: 330px;
+    margin-top: -44px;
+    display:inline-block;
+}
+#mapsearch1{
+    height: 30px;
+    width: 275px;
+    margin-left: 687px;
+    margin-top: -74px;
+    vertical-align: top;
+    display:inline-block;
+}
+.title{
+    display:inline-block;
+    margin-left: 340px;
+    color:green;
+    display:inline-block;
+}
+.title1{
+    display:inline-block;
+    margin-left: 219px;
+    margin-top: 2px;
+    color:green;
+    display:inline-block;
+    vertical-align: top;
+}
+.flightnum{
+    display:inline-block;
+    margin-left: 340px;
+    color:green;
+}
+#flightinfo{
+    height: 30px;
+    width: 275px;
+    margin-left: 340px;
+    display:inline-block;
+}
+.terminal{
+    display:inline-block;
+    margin-left: 340px;
+    color:green;
+}
+#terminal{
+    height: 30px;
+    width: 275px;
+    margin-left: 330px;
+    display:inline-block;
+}
+body{
+    background-color:rgba(232, 222, 222, 0.516);
+}
+#button{
+    margin-left: 337px;
+    margin-top: -43px;
+}
+.payment{
+    color:green;
+}
+#container{
+    display:none; 
+    height: 400px; 
+    width: 438px; 
+    margin-left: 650px; 
+    margin-top: -347px; 
+    border:solid black 4px;
+    border-radius:16px;
+    overflow:scroll; 
+    background-color:rgba(52, 73, 94, 0.8);
+}
+#chat{
+    border: solid black 2px;
+    border-radius:5px;
+    margin: 10px;
+    padding: 10px;
+    overflow:scroll; 
+}
+#message{
+    width:315px;
+    margin-left:15px;
+}
+.chatheader{
+    padding:8px;
+    color:black;
+}

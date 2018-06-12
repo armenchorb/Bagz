@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="main.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>BAGZ</title>
+    </head>
+    <body>
+         <div class='navbar-fixed'>
+                    <nav class='black'>
+                        <div class='container'>
+                            <div class='nav-wrapper'>
+                                <a href='/'><img id='logo' style='height: 60px; width: 170px;'src='thebagz.png'></a>
+                                <a href="#" data-target="mobile-nav" class="sidenav-trigger">
+                                    <i class="material-icons">menu</i>
+                                </a>
+                                <ul class='right hide-on-med-and-down'>
+                                    <li>
+                                    <a href="/" class='grey-text'>Home</a>
+                                    </li>
+                                    <li>
+                                    <a href="/login" class='grey-text'>Log In</a>
+                                    </li>
+                                    <li>
+                                    <a href="#home" class='grey-text'>Contact</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            <div class="container">
+                    <div class="row" style="display: inline-block; padding: 2px 48px 0px 48px; border: 1px solid black; background-color: rgba(52, 73, 94, 0.7); border-radius:5px; margin-top:25px;">
+                        <h5 class="green-text">Sign Up</h5>
+                        <form class="col s8" id="reg-form" action='/signup' method='POST'>
+                          <div class="row">
+                            <div class="input-field col s6">
+                              <input id="first_name" name='first_name' type="text" class="validate" required>
+                              <label for="first_name" class='black-text'>First Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                              <input id="last_name" name='last_name' type="text" class="validate" required>
+                              <label for="last_name" class='black-text'>Last Name</label>
+                            </div>
+                          </div>
+                          <div class="row">
+                                <div class="input-field col s12">
+                                  <input id="phone" name='phone' type="number" class="validate" required>
+                                  <label for="phone" class='black-text'>Phone Number</label>
+                                </div>
+                              </div>
+                          <div class="row">
+                            <div class="input-field col s12">
+                              <input id="email" name='email' type="email" class="validate" required>
+                              <label for="email" class='black-text'>Email</label>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="input-field col s12">
+                              <input id="password" name='password' type="password" class="validate" minlength="6" required>
+                              <label for="password" class='black-text'>Password</label>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="input-field col s12">
+                              <input id="password_confirmation" name='password_confirmation' type="password" class="validate" minlength="6" required>
+                              <label for="password" class='black-text'>Password Confirmation</label>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="input-field col s6">
+                              <button class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">Register
+                                <i class="material-icons right">done</i>
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+                    <script> </script>
+    </body>
+    </html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="map.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+      <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDQJz-6K1JGh4s6egoc6Bhm_p_Px8y9DXw"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script type='text/javascript' src='socket.io/socket.io.js'></script>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>BAGZ</title>
+      <script>
+        $(document).ready(function(){
+            var socket = io.connect();
+            var name = $('#hiddenUser').val();
+            socket.emit('got_new_user', {name: name});
+            socket.on('added_user', function(data){
+                console.log(data);
+                for(var i = 0; i < data.messages.length; i++){
+                    $('#chat').append(data.messages[i]);
+                };
+            });
+            socket.on('update_chat', function(data){
+                console.log(data);
+                $('#chat').append(data.message);
+            });
+            $('#chatmessage').submit(function(){
+                var form_message = "<p>" + "<strong>"+ name +"</strong>"+ " says: " + $('#message').val() + "</p>";
+                console.log(form_message);
+                socket.emit('new_message', {message: form_message});
+                $('#message').val('');
+                return false;
+            });
+            $('#driverchat').on("click", function(){
+                console.log("g7")
+                $('#container').css('display', 'block');
+            });
+        });
+    </script>
+      <script>
+          var map;
+          var infoWindow;
+
+          var request;
+          var service;
+          var markers = [];
+
+          function initialize(){
+            var center = new google.maps.LatLng(34.0522, -118.2437);
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: center,
+                zoom: 10
+             });
+             request = {
+                 location: center,
+                 radius:80467,
+                 types: ['airport']
+             };
+             infowindow = new google.maps.InfoWindow();
+
+             service = new google.maps.places.PlacesService(map);
+             service.nearbySearch(request, callback);
+
+            }
+            function callback(results, status){
+                if(status == google.maps.places.PlacesServiceStatus.OK){
+                    for (var i = 0; i < results.length; i++){
+                        createMarker(results[i]);
+                    }
+                }
+            }
+            function createMarker(place){
+                var placeLoc = place.geometry.location;
+                var marker = new google.maps.Marker({
+                    map:map,
+                    position: place.geometry.location,
+                    draggable:true
+                });
+            var searchBox = new google.maps.places.SearchBox(document.getElementById('mapsearch'));
+            var searchBox1 = new google.maps.places.SearchBox(document.getElementById('mapsearch1'));
+            
+
+            google.maps.event.addListener(searchBox, 'places_changed', function(){
+
+                    var places = searchBox.getPlaces();
+
+                    var bounds = new google.maps.LatLngBounds();
+                    var i,place;
+
+                    for(i=0; place=places[i]; i++){
+                        console.log(place.geometry.location);
+
+                        bounds.extend(place.geometry.location);
+                        marker.setPosition(place.geometry.location);
+                    }
+                    map.fitBounds(bounds);
+                    map.setZoom(10);
+
+            })
+
+            google.maps.event.addListener(searchBox1,'places_changed', function(){
+
+            var places1 = searchBox1.getPlaces();
+
+            var bounds = new google.maps.LatLngBounds();
+            var i,place;
+
+            for(i=0; place=places1[i]; i++){
+                console.log(place.geometry.location);
+
+                bounds.extend(place.geometry.location);
+                marker.setPosition(place.geometry.location);
+            }
+                map.fitBounds(bounds);
+                map.setZoom(10);
+
+            })
+
+                google.maps.event.addListener(marker, 'click', function(){
+                    infowindow.setContent(place.name);
+                    infowindow.open(map,this);
+                });
+            }
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+      </script>
+    </head>
+    <body id="home" class="scrollspy">
+        <ul id="slide-out" class="sidenav sidenav-fixed" style='background-color: rgba(52, 73, 94, 1);width: 275px;
+        border-right: solid black;'>
+                <input type="hidden" value="<%=user.first_name%>" id="hiddenUser">
+                <li><div class="user-view" style='border-bottom: solid black; border-radius: 5px;'>
+                  <div class="background" style='background-color:rgba(0, 0, 0, 0.571)'>
+                      <!-- <img src='airport1.jpg'> -->
+                  </div>
+                  <a href="#"><img class="circle" src="avatar.png"></a>
+                  <a href="#"><span class="green-text name"><%= user.first_name %> <%= user.last_name %></span></a>
+                  <a href="#"><span class="green-text email"><%= user.email %></span></a>
+                </div></li>
+                <li><a href="#!" class='green-text'><i class="material-icons green-text">airport_shuttle</i>Your Trip</a></li>
+                <% if(user.location.length > 0) {%>
+                <li><a href="#!" style='border-top: solid black 2px;border-radius: 7px;'>Pick Up: <%= user.location[user.location.length-1].pickup %></a></li>
+                <li><a href="#!">Drop Off: <%= user.location[user.location.length-1].dropoff %> </a></li>
+                <% } %>
+                <li><div class="divider" style='background-color:rgba(0, 0, 0, 0.584); margin: 90px 0 0 0;border-bottom: solid black 2px;'></div></li>
+                <li><a class="subheader green-text"><i class="material-icons green-text">chat</i>Contact Driver</a></li>
+                <li id='driverchat' style='border-radius: 8px;border-top: solid black 2px;'><a class="waves-effect">Click here to chat with driver</a></li>
+              </ul>
+              <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+              <div id='map'>
+              </div>
+              <div class='title'>
+              <h6>Pick up location</h6>
+              </div>
+              <div class='title1'>
+                <h6>Drop off location</h6>
+                </div>
+              <form action='/dashboard' method='POST'>
+              <div class='row' style='margin-top:-17px'>
+              <div class="input-field col s6">
+                    <input id="mapsearch" type="text" data-length="10" name='pickup'>
+                  </div>
+                </div>
+                <div class='row'>
+                          <input id="mapsearch1" type="text" data-length="10" name='dropoff' style='display: inline-block'>
+                        <div id='button'>
+                            <input id="submit" class="btn waves-effect waves-light" type="submit" data-length="10" value='Send Request'>
+                            </div>
+                      </div>
+                </form>
+                <div class='flightnum' style='margin-top:-17px'>
+                    <h6>Flight Number & Terminal</h6>
+                    </div>
+                <!-- <div class='row' style='margin-top:-15px'> -->
+                    <div class="input-field col s6">
+                    <input id="flightinfo" type="text" data-length="10">
+                    <!-- </div> -->
+                    </div>
+
+                <div class='row' style='height:200px; width:250px; margin-left:340px;display: inline-block;'>
+                <h6 class='payment'>Payment Information</h6>
+                <br>
+                <form action="/charge" method="POST">
+                    <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="pk_test_DynEr1C6R3YK0vTxqp5oXEWJ"
+                        data-amount="5000"
+                        data-name="Bagz Delivery"
+                        data-description="Your Trip Details"
+                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                        data-locale="auto">
+                    </script>
+                    <script>
+                    document.getElementsByClassName('stripe-button-el')[0].style.display = 'none';
+                    </script>
+                    <button type='submit' class='btn btn-outline-dark black-text btn-lg'>Make Payment</button>
+                </form>
+                </div>
+                <div class='row' id='container'>
+                <h6 class='chatheader'>Live Chat</h6>
+                <div id='chat'>
+                </div>
+                <form id='chatmessage'>
+                        <input type='text' id='message' placeholder='Enter message here'>
+                        <input type='submit' class='btn btn-outline-dark black-text btn-lg' name='Send Message'>
+                    </form>
+                </div>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+              <script>
+              const sideNav = document.querySelector('.sidenav');
+              M.Sidenav.init(sideNav, {});
+              </script>
+        </body>
+        </html>

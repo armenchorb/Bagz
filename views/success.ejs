@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="success.css">
+      <link rel="stylesheet" type="text/css" href="./css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>BAGZ</title>
+    </head>
+    <body id="home" class="scrollspy">
+        <!-- Nav Bar -->
+        <div class='navbar-fixed'>
+            <nav class='black'>
+                <div class='container'>
+                    <div class='nav-wrapper'>
+                        <a href='/'><img id='logo' style='height: 60px; width: 170px;'src='thebagz.png'></a>
+                        <a href="#" data-target="mobile-nav" class="sidenav-trigger">
+                            <i class="material-icons">menu</i>
+                        </a>
+                        <ul class='right hide-on-med-and-down'>
+                            <li>
+                            <a href="/" class='grey-text'>Home</a>
+                            </li>
+                            <li>
+                            <a href="/dashboard" class='grey-text'>Dashboard</a>
+                            </li>
+                            <li>
+                            <a href="#" class='grey-text'>Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div id='thanks'>
+        <h2>Thank You, <%= user.first_name %>!</h2>
+        <p>Your payment has been processed and your driver is on their way.</p>
+        <p>Estimated pick up time: 10:00am.</p>
+        <p>Estimated drop off time: 3:00pm.</p>
+        <a href='/dashboard' class='btn black-text btn-lg'>Go Back</a>
+        </div>
+        </body>
+        </html>
